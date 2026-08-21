@@ -328,6 +328,20 @@
         const pos = getPointerPos(e);
         lastX = pos.x;
         lastY = pos.y;
+
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, brushSize / 2, 0, Math.PI * 2);
+        if (currentTool === 'eraser') {
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.fill();
+        } else {
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = currentTool === 'rainbow' ? `hsl(${hue}, 100%, 60%)` : currentColor;
+            ctx.fill();
+            addParticle(pos.x, pos.y, ctx.fillStyle);
+        }
+        strokesCount++;
+        evaluateDrawing();
     }
 
     function draw(e) {
@@ -385,6 +399,14 @@
     paintCanvas.addEventListener('touchend', stopDraw);
 
     // UI Event Listeners
+    const skipPromptBtn = document.getElementById('skipPromptBtn');
+    if (skipPromptBtn) {
+        skipPromptBtn.addEventListener('click', () => {
+            initializePrompt();
+            playBeep(440, 'sine', 0.1);
+        });
+    }
+
     if (startChallengeBtn) startChallengeBtn.addEventListener('click', startGame);
     if (submitBtn) submitBtn.addEventListener('click', submitDrawing);
     if (undoBtn) undoBtn.addEventListener('click', undo);

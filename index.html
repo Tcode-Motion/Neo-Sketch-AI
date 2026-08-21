@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeoSketch AI — Professional Offline Creative Canvas & Neural AI Studio</title>
+    <title>NeoSketch AI — Professional Offline Creative Studio for Android</title>
     <meta name="description" content="NeoSketch AI is a privacy-first, offline creative studio for Android powered by on-device neural engines, pro layers, and 4x neural upscaling.">
     <link rel="icon" type="image/svg+xml" href="logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,17 +18,23 @@
     <div class="glow-orb orb-3"></div>
 
     <!-- Professional Navigation Bar -->
-    <header class="navbar">
+    <header class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#" class="logo-group">
                 <img src="logo.svg" alt="NeoSketch AI Logo" class="brand-logo-img">
                 <span class="brand-title">NeoSketch <span class="brand-ai">AI</span></span>
             </a>
             
-            <nav class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#game-section" class="nav-game-link">🎮 AI QuickDraw</a>
-                <a href="https://github.com/Tcode-Motion/Neo-Sketch-AI" target="_blank" rel="noopener" class="nav-github-link">
+            <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="#features" class="nav-item">Features</a>
+                <a href="#game-section" class="nav-item nav-game-link">🎮 AI QuickDraw</a>
+                <a href="https://github.com/Tcode-Motion/Neo-Sketch-AI" target="_blank" rel="noopener" class="nav-item nav-github-link">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                     </svg>
@@ -87,9 +93,9 @@
         <!-- Interactive AI QuickDraw Web Game Section -->
         <section class="game-section" id="game-section">
             <div class="section-header">
-                <div class="tag-label">MINI-GAME EXPERIENCE</div>
+                <div class="tag-label">INTERACTIVE MINI-GAME</div>
                 <h2 class="section-title">AI QuickDraw: The 30s Sketch Battle</h2>
-                <p class="section-subtitle">Test your drawing skills against our challenge engine! Sketch the prompt before the timer runs out.</p>
+                <p class="section-subtitle">Sketch the target prompt before the timer expires! The AI evaluator grades stroke speed, shape density, and recognition accuracy.</p>
             </div>
 
             <div class="game-card">
@@ -98,6 +104,7 @@
                     <div class="prompt-box">
                         <span class="prompt-label">TARGET PROMPT:</span>
                         <span class="prompt-text" id="targetPrompt">Cyber Rocket 🚀</span>
+                        <button class="btn-skip-prompt" id="skipPromptBtn" title="Get a different prompt">🎲 New</button>
                     </div>
                     <div class="game-stats">
                         <div class="stat-pill timer-pill">
@@ -116,7 +123,7 @@
                 </div>
 
                 <!-- Canvas Workspace -->
-                <div class="canvas-wrapper">
+                <div class="canvas-wrapper" id="canvasWrapper">
                     <canvas id="paintCanvas"></canvas>
                     <canvas id="particleCanvas"></canvas>
 
@@ -124,8 +131,8 @@
                     <div class="game-overlay" id="gameOverlay">
                         <div class="overlay-content">
                             <div class="overlay-emoji" id="overlayEmoji">🎨</div>
-                            <h3 class="overlay-title" id="overlayTitle">Ready for the Challenge?</h3>
-                            <p class="overlay-desc" id="overlayDesc">Draw the given prompt quickly and accurately. The AI evaluator will score your creativity & brush flow!</p>
+                            <h3 class="overlay-title" id="overlayTitle">AI QuickDraw Challenge</h3>
+                            <p class="overlay-desc" id="overlayDesc">Draw the target prompt quickly! You have 30 seconds to sketch your masterpiece before the AI judges your artwork.</p>
                             <button class="btn btn-primary btn-game" id="startChallengeBtn">Start Challenge 🚀</button>
                         </div>
                     </div>
@@ -134,28 +141,28 @@
                 <!-- Game Toolbar & Controls -->
                 <div class="game-toolbar">
                     <div class="tool-group">
-                        <button class="tool-btn active" data-tool="brush" title="Brush">🖌️ Brush</button>
+                        <button class="tool-btn active" data-tool="brush" title="Neon Brush">🖌️ Brush</button>
                         <button class="tool-btn" data-tool="rainbow" title="Rainbow Neon Mode">🌈 Neon</button>
                         <button class="tool-btn" data-tool="eraser" title="Eraser">🧹 Eraser</button>
                     </div>
 
                     <div class="color-palette">
-                        <button class="color-dot active" style="background: #38ef7d;" data-color="#38ef7d"></button>
-                        <button class="color-dot" style="background: #00f2fe;" data-color="#00f2fe"></button>
-                        <button class="color-dot" style="background: #ff007f;" data-color="#ff007f"></button>
-                        <button class="color-dot" style="background: #ffe600;" data-color="#ffe600"></button>
-                        <button class="color-dot" style="background: #9d4edd;" data-color="#9d4edd"></button>
-                        <button class="color-dot" style="background: #ffffff;" data-color="#ffffff"></button>
+                        <button class="color-dot active" style="background: #38ef7d;" data-color="#38ef7d" title="Neon Green"></button>
+                        <button class="color-dot" style="background: #00f2fe;" data-color="#00f2fe" title="Cyber Cyan"></button>
+                        <button class="color-dot" style="background: #ff007f;" data-color="#ff007f" title="Neon Pink"></button>
+                        <button class="color-dot" style="background: #ffe600;" data-color="#ffe600" title="Bright Yellow"></button>
+                        <button class="color-dot" style="background: #9d4edd;" data-color="#9d4edd" title="Purple Glow"></button>
+                        <button class="color-dot" style="background: #ffffff;" data-color="#ffffff" title="Pure White"></button>
                     </div>
 
                     <div class="slider-group">
                         <span class="slider-label">Size:</span>
-                        <input type="range" id="brushSize" min="2" max="40" value="8">
+                        <input type="range" id="brushSize" min="2" max="36" value="8" title="Brush Size">
                     </div>
 
                     <div class="action-group">
-                        <button class="btn-action" id="undoBtn" title="Undo">↩️</button>
-                        <button class="btn-action" id="clearBtn" title="Clear Canvas">🗑️</button>
+                        <button class="btn-action" id="undoBtn" title="Undo Last Stroke">↩️ Undo</button>
+                        <button class="btn-action" id="clearBtn" title="Clear Canvas">🗑️ Clear</button>
                         <button class="btn-action btn-submit-drawing" id="submitDrawingBtn">✨ Submit Sketch</button>
                     </div>
                 </div>
@@ -176,27 +183,28 @@
         <!-- Features Showcase -->
         <section class="features-section" id="features">
             <div class="section-header">
-                <div class="tag-label">CORE CAPABILITIES</div>
-                <h2 class="section-title">Built for Creators & Digital Artists</h2>
+                <div class="tag-label">POWERFUL ENGINE</div>
+                <h2 class="section-title">Engineered for Creative Professionals</h2>
+                <p class="section-subtitle">Every tool and neural feature runs 100% locally with zero cloud dependencies.</p>
             </div>
 
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feat-icon-box">🎨</div>
                     <h3>Infinite Layer Studio</h3>
-                    <p>Composite multiple layers with blend modes (Multiply, Screen, Overlay), alpha clipping, lock transparency, and layer group management.</p>
+                    <p>Composite multiple layers with blend modes (Multiply, Screen, Overlay), alpha clipping, transparency locks, and custom document dimensions.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feat-icon-box">⚡</div>
                     <h3>Offline Swin2SR Super-Res</h3>
-                    <p>Upscale small or compressed sketches up to 4× master resolution with sharp edge reconstruction directly on your mobile GPU/NPU.</p>
+                    <p>Upscale low-resolution photos and sketches up to 4× master resolution with sharp edge reconstruction directly on your mobile GPU/NPU.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feat-icon-box">🧠</div>
                     <h3>Neural Depth & Sketch</h3>
-                    <p>Instant portrait depth map synthesis and realistic charcoal pencil extraction powered by optimized on-device neural networks.</p>
+                    <p>Instant portrait depth map synthesis and realistic charcoal pencil extraction powered by optimized on-device ONNX neural networks.</p>
                 </div>
 
                 <div class="feature-card">
@@ -213,11 +221,11 @@
                 <div class="dl-content">
                     <span class="tag-label">OFFICIAL PRODUCTION RELEASE</span>
                     <h2>Install NeoSketch for Android</h2>
-                    <p>Get the full production build with bundled fallback models, full offline tools, and hardware acceleration.</p>
+                    <p>Get the full production build with bundled fallback neural models, full offline tools, and hardware acceleration.</p>
                     
                     <div class="apk-info-box">
                         <div class="info-row">
-                            <span class="info-key">Package Name:</span>
+                            <span class="info-key">Package:</span>
                             <span class="info-val">com.neosketch.ai</span>
                         </div>
                         <div class="info-row">
@@ -262,7 +270,7 @@
                     </p>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Product Column -->
                 <div class="footer-col">
                     <h4 class="footer-heading">Product</h4>
                     <ul class="footer-links">
@@ -278,15 +286,19 @@
                     <h4 class="footer-heading">Open Source</h4>
                     <ul class="footer-links">
                         <li><a href="https://github.com/Tcode-Motion/Neo-Sketch-AI" target="_blank" rel="noopener">GitHub Repository</a></li>
-                        <li><a href="https://github.com/Tcode-Motion/Neo-Sketch-AI/issues" target="_blank" rel="noopener">Report an Issue</a></li>
-                        <li><a href="https://github.com/Tcode-Motion/Neo-Sketch-AI/blob/main/README.md" target="_blank" rel="noopener">Documentation</a></li>
+                        <li><a href="https://github.com/Tcode-Motion/Neo-Sketch-AI/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+                        <li><a href="https://github.com/Tcode-Motion/Neo-Sketch-AI/blob/main/README.md" target="_blank" rel="noopener">Project Documentation</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>© 2026 NeoSketch AI. Open Source Creative Software.</p>
-                <p class="footer-privacy-note">100% Offline-First • Zero Cloud Telemetry • Privacy by Design</p>
+                <p class="footer-copy">© 2026 NeoSketch AI. Open Source Creative Software.</p>
+                <div class="footer-badges">
+                    <span class="footer-badge">🔒 100% Offline-First</span>
+                    <span class="footer-badge">⚡ Zero Cloud Telemetry</span>
+                    <span class="footer-badge">🛡️ Privacy by Design</span>
+                </div>
             </div>
         </div>
     </footer>
