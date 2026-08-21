@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoSketch AI — Next-Gen Offline Creative Canvas & Neural AI</title>
+    <meta name="description" content="NeoSketch AI is an offline-first creative studio for Android powered by ONNX neural engines, professional drawing tools, and super-resolution upscaling.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Ambient Glows -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo-group">
+                <div class="logo-badge">
+                    <svg viewBox="0 0 100 100" class="logo-svg">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#38ef7d" />
+                                <stop offset="50%" stop-color="#11998e" />
+                                <stop offset="100%" stop-color="#00f2fe" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="50" cy="50" r="44" fill="none" stroke="url(#logoGrad)" stroke-width="8" stroke-dasharray="210 60"/>
+                        <circle cx="50" cy="50" r="24" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.8"/>
+                        <path d="M30,50 L70,50 M50,30 L50,70" stroke="#38ef7d" stroke-width="4" stroke-linecap="round"/>
+                        <polygon points="50,20 62,40 38,40" fill="#00f2fe"/>
+                    </svg>
+                </div>
+                <span class="brand-title">NeoSketch <span class="brand-ai">AI</span></span>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#game-section" class="nav-game-link">🎮 AI QuickDraw Game</a>
+                <a href="#ai-models">Neural Models</a>
+                <a href="#download" class="nav-cta-btn">Download APK</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="pulse-dot"></span> 100% Offline-First Neural Architecture
+                </div>
+                <h1 class="hero-title">
+                    The Ultimate Creative Canvas <br>
+                    <span class="gradient-text">Powered by On-Device AI</span>
+                </h1>
+                <p class="hero-desc">
+                    Unleash boundless creativity with high-performance layers, realistic pro brushes, and on-device ONNX neural models for instant depth estimation, background removal, and 4x neural upscaling.
+                </p>
+                <div class="hero-actions">
+                    <a href="NeoSketch-Production.apk" download="NeoSketch-v2.0-Production.apk" class="btn btn-primary" id="mainDownloadBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                        </svg>
+                        <span>Download APK (v2.0)</span>
+                    </a>
+                    <a href="#game-section" class="btn btn-secondary">
+                        <span>Play Mini Game 🎮</span>
+                    </a>
+                </div>
+                <div class="hero-specs">
+                    <div class="spec-item">
+                        <span class="spec-val">0ms</span>
+                        <span class="spec-label">Cloud Latency (100% Offline)</span>
+                    </div>
+                    <div class="spec-divider"></div>
+                    <div class="spec-item">
+                        <span class="spec-val">4×</span>
+                        <span class="spec-label">Swin2SR Super-Res</span>
+                    </div>
+                    <div class="spec-divider"></div>
+                    <div class="spec-item">
+                        <span class="spec-val">120 FPS</span>
+                        <span class="spec-label">Hardware Accelerated</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive AI QuickDraw Web Game Section -->
+        <section class="game-section" id="game-section">
+            <div class="section-header">
+                <div class="tag-label">MINI-GAME EXPERIENCE</div>
+                <h2 class="section-title">AI QuickDraw: The 30s Sketch Battle</h2>
+                <p class="section-subtitle">Test your drawing skills against our AI challenge generator! Sketch the prompt before the timer runs out.</p>
+            </div>
+
+            <div class="game-card">
+                <!-- Game Header Bar -->
+                <div class="game-bar">
+                    <div class="prompt-box">
+                        <span class="prompt-label">TARGET PROMPT:</span>
+                        <span class="prompt-text" id="targetPrompt">Loading Challenge...</span>
+                    </div>
+                    <div class="game-stats">
+                        <div class="stat-pill timer-pill">
+                            <span class="stat-icon">⏱️</span>
+                            <span id="gameTimer">30s</span>
+                        </div>
+                        <div class="stat-pill score-pill">
+                            <span class="stat-icon">🏆</span>
+                            <span id="gameScore">0 pts</span>
+                        </div>
+                        <div class="stat-pill streak-pill">
+                            <span class="stat-icon">🔥</span>
+                            <span id="gameStreak">Streak: 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canvas Workspace -->
+                <div class="canvas-wrapper">
+                    <canvas id="paintCanvas" width="800" height="500"></canvas>
+                    <canvas id="particleCanvas" width="800" height="500"></canvas>
+
+                    <!-- Start / Game Over Overlay -->
+                    <div class="game-overlay" id="gameOverlay">
+                        <div class="overlay-content">
+                            <div class="overlay-emoji" id="overlayEmoji">🎨</div>
+                            <h3 class="overlay-title" id="overlayTitle">Ready for the Challenge?</h3>
+                            <p class="overlay-desc" id="overlayDesc">Draw the given prompt quickly and accurately. The AI evaluator will score your creativity & brush flow!</p>
+                            <button class="btn btn-primary btn-game" id="startChallengeBtn">Start Challenge 🚀</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Toolbar & Controls -->
+                <div class="game-toolbar">
+                    <div class="tool-group">
+                        <button class="tool-btn active" data-tool="brush" title="Brush">🖌️ Brush</button>
+                        <button class="tool-btn" data-tool="rainbow" title="Rainbow Neon Mode">🌈 Neon</button>
+                        <button class="tool-btn" data-tool="eraser" title="Eraser">🧹 Eraser</button>
+                    </div>
+
+                    <div class="color-palette">
+                        <button class="color-dot active" style="background: #ffffff;" data-color="#ffffff"></button>
+                        <button class="color-dot" style="background: #38ef7d;" data-color="#38ef7d"></button>
+                        <button class="color-dot" style="background: #00f2fe;" data-color="#00f2fe"></button>
+                        <button class="color-dot" style="background: #ff007f;" data-color="#ff007f"></button>
+                        <button class="color-dot" style="background: #ffe600;" data-color="#ffe600"></button>
+                        <button class="color-dot" style="background: #9d4edd;" data-color="#9d4edd"></button>
+                    </div>
+
+                    <div class="slider-group">
+                        <span class="slider-label">Size:</span>
+                        <input type="range" id="brushSize" min="2" max="40" value="8">
+                    </div>
+
+                    <div class="action-group">
+                        <button class="btn-action" id="undoBtn" title="Undo">↩️</button>
+                        <button class="btn-action" id="clearBtn" title="Clear Canvas">🗑️</button>
+                        <button class="btn-action btn-submit-drawing" id="submitDrawingBtn">✨ Submit Sketch</button>
+                    </div>
+                </div>
+
+                <!-- Live Evaluation Meter -->
+                <div class="evaluation-container">
+                    <div class="eval-header">
+                        <span>AI Accuracy & Brush Stroke Recognition:</span>
+                        <span id="evalPercentage">0%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-bar" id="evalBar"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Showcase -->
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <div class="tag-label">CORE CAPABILITIES</div>
+                <h2 class="section-title">Built for Creators & Digital Artists</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feat-icon-box">🎨</div>
+                    <h3>Infinite Layer Studio</h3>
+                    <p>Composite multiple layers with blend modes (Multiply, Screen, Overlay), alpha clipping, lock transparency, and layer group management.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feat-icon-box">⚡</div>
+                    <h3>Offline Swin2SR Super-Res</h3>
+                    <p>Upscale small or compressed sketches up to 4× master resolution with sharp edge reconstruction directly on your mobile GPU/NPU.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feat-icon-box">🧠</div>
+                    <h3>Neural Depth & Sketch</h3>
+                    <p>Instant portrait depth map synthesis and realistic charcoal pencil extraction powered by optimized on-device neural networks.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feat-icon-box">🔒</div>
+                    <h3>100% Privacy Preserved</h3>
+                    <p>Zero artwork leaves your device. No cloud logins or mandatory registrations required. Your creations stay entirely on your phone.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download & Releases Section -->
+        <section class="download-section" id="download">
+            <div class="download-card">
+                <div class="dl-content">
+                    <span class="tag-label">OFFICIAL RELEASE</span>
+                    <h2>Install NeoSketch for Android</h2>
+                    <p>Get the full production build with bundled fallback models, full offline tools, and hardware acceleration.</p>
+                    
+                    <div class="apk-info-box">
+                        <div class="info-row">
+                            <span class="info-key">Package:</span>
+                            <span class="info-val">com.neosketch.ai</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Version:</span>
+                            <span class="info-val">v2.0 Production (Build 2)</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Target Android:</span>
+                            <span class="info-val">Android 8.0+ (API 26-35)</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Architecture:</span>
+                            <span class="info-val">arm64-v8a / armeabi-v7a / x86_64</span>
+                        </div>
+                    </div>
+
+                    <div class="dl-btn-wrapper">
+                        <a href="NeoSketch-Production.apk" download="NeoSketch-v2.0-Production.apk" class="btn btn-primary btn-large">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                            </svg>
+                            <span>Download NeoSketch APK</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>© 2026 NeoSketch AI. Open Source Creative Software.</p>
+            <p class="footer-sub">Crafted with ❤️ for digital artists, illustrators, and creators worldwide.</p>
+        </div>
+    </footer>
+
+    <!-- Game & Page Scripts -->
+    <script src="game.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
