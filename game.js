@@ -1,29 +1,29 @@
 /**
- * NeoSketch AI QuickDraw Game Engine
- * Features: Dynamic Canvas, Particle Trails, AI Challenge Prompts, Real-time Scoring & Evaluation
+ * NeoSketch AI QuickDraw Game Engine (v2.0)
+ * Immediate Challenge Initialization, Canvas Scaling & Sound Synthesizer
  */
 
 (function() {
     const CHALLENGE_PROMPTS = [
-        { name: "Cyber Rocket 🚀", keywords: ["triangle", "oval", "flame", "cylinder"], targetStrokes: 18 },
-        { name: "Neon Sunset 🌅", keywords: ["circle", "horizon", "waves", "mountain"], targetStrokes: 15 },
+        { name: "Cyber Rocket 🚀", keywords: ["triangle", "oval", "flame", "cylinder"], targetStrokes: 16 },
+        { name: "Neon Sunset 🌅", keywords: ["circle", "horizon", "waves", "mountain"], targetStrokes: 14 },
         { name: "Coffee Cup ☕", keywords: ["cylinder", "handle", "steam", "oval"], targetStrokes: 12 },
-        { name: "Cyber Dragon 🐉", keywords: ["curve", "horns", "wings", "spikes"], targetStrokes: 24 },
-        { name: "Cute Robot 🤖", keywords: ["square", "antenna", "eyes", "circle"], targetStrokes: 16 },
-        { name: "Lotus Flower 🪷", keywords: ["petal", "curves", "center", "leaf"], targetStrokes: 20 },
-        { name: "Sports Car 🏎️", keywords: ["wheels", "chassis", "spoiler", "windshield"], targetStrokes: 22 },
+        { name: "Cyber Dragon 🐉", keywords: ["curve", "horns", "wings", "spikes"], targetStrokes: 22 },
+        { name: "Cute Robot 🤖", keywords: ["square", "antenna", "eyes", "circle"], targetStrokes: 15 },
+        { name: "Lotus Flower 🪷", keywords: ["petal", "curves", "center", "leaf"], targetStrokes: 18 },
+        { name: "Sports Car 🏎️", keywords: ["wheels", "chassis", "spoiler", "windshield"], targetStrokes: 20 },
         { name: "Neon Cat 🐱", keywords: ["ears", "whiskers", "tail", "face"], targetStrokes: 14 }
     ];
 
-    // State Variables
-    let currentPrompt = null;
+    // Game State
+    let currentPrompt = CHALLENGE_PROMPTS[0];
     let isGameActive = false;
     let timerSeconds = 30;
     let timerInterval = null;
     let score = 0;
     let streak = 0;
     let currentTool = 'brush'; // 'brush', 'rainbow', 'eraser'
-    let currentColor = '#ffffff';
+    let currentColor = '#38ef7d';
     let brushSize = 8;
     let isDrawing = false;
     let lastX = 0;
@@ -36,6 +36,8 @@
     // DOM Elements
     const paintCanvas = document.getElementById('paintCanvas');
     const particleCanvas = document.getElementById('particleCanvas');
+    if (!paintCanvas || !particleCanvas) return;
+
     const ctx = paintCanvas.getContext('2d');
     const pCtx = particleCanvas.getContext('2d');
 
@@ -59,45 +61,63 @@
     const clearBtn = document.getElementById('clearBtn');
     const submitBtn = document.getElementById('submitDrawingBtn');
 
-    // Resize Canvas Support
+    // Immediate Initialization on Page Load
+    function initializePrompt() {
+        const randomIndex = Math.floor(Math.random() * CHALLENGE_PROMPTS.length);
+        currentPrompt = CHALLENGE_PROMPTS[randomIndex];
+        if (targetPromptEl) {
+            targetPromptEl.textContent = currentPrompt.name;
+        }
+        if (evalPercent) evalPercent.textContent = "0%";
+        if (evalBar) evalBar.style.width = "0%";
+    }
+    initializePrompt();
+
+    // Canvas Sizing & HiDPI Support
     function resizeCanvas() {
         const rect = paintCanvas.parentElement.getBoundingClientRect();
-        const dpr = window.devicePixelRatio || 1;
-        
-        // Save current canvas content
+        const width = Math.max(300, Math.floor(rect.width));
+        const height = Math.max(300, Math.floor(rect.height));
+
         const tempCanvas = document.createElement('canvas');
         tempCanvas.width = paintCanvas.width;
         tempCanvas.height = paintCanvas.height;
         const tempCtx = tempCanvas.getContext('2d');
-        tempCtx.drawImage(paintCanvas, 0, 0);
+        if (paintCanvas.width > 0 && paintCanvas.height > 0) {
+            tempCtx.drawImage(paintCanvas, 0, 0);
+        }
 
-        paintCanvas.width = rect.width * dpr;
-        paintCanvas.height = rect.height * dpr;
-        particleCanvas.width = rect.width * dpr;
-        particleCanvas.height = rect.height * dpr;
+        paintCanvas.width = width;
+        paintCanvas.height = height;
+        particleCanvas.width = width;
+        particleCanvas.height = height;
 
-        ctx.scale(dpr, dpr);
-        pCtx.scale(dpr, dpr);
-
-        ctx.drawImage(tempCanvas, 0, 0, rect.width, rect.height);
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
+
+        if (tempCanvas.width > 0 && tempCanvas.height > 0) {
+            ctx.drawImage(tempCanvas, 0, 0, width, height);
+        }
     }
 
     window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    setTimeout(resizeCanvas, 50);
 
-    // Sound Synthesizer (Web Audio API)
-    const audioCtx = (window.AudioContext || window.webkitAudioContext) ? new (window.AudioContext || window.webkitAudioContext)() : null;
+    // Web Audio Sound Synthesizer
+    let audioCtx = null;
     function playBeep(freq = 440, type = 'sine', duration = 0.15) {
-        if (!audioCtx) return;
         try {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = type;
             osc.frequency.value = freq;
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
             osc.connect(gain);
             gain.connect(audioCtx.destination);
@@ -106,7 +126,7 @@
         } catch (_) {}
     }
 
-    // Game Lifecycle
+    // Start Challenge Handler
     function startGame() {
         isGameActive = true;
         timerSeconds = 30;
@@ -114,11 +134,11 @@
         history = [];
         clearCanvas();
 
-        // Pick Random Prompt
-        currentPrompt = CHALLENGE_PROMPTS[Math.floor(Math.random() * CHALLENGE_PROMPTS.length)];
-        targetPromptEl.textContent = currentPrompt.name;
+        initializePrompt();
 
-        gameOverlay.style.display = 'none';
+        if (gameOverlay) {
+            gameOverlay.style.display = 'none';
+        }
         updateStats();
 
         playBeep(523.25, 'triangle', 0.2); // High C
@@ -126,13 +146,14 @@
         clearInterval(timerInterval);
         timerInterval = setInterval(() => {
             timerSeconds--;
-            timerEl.textContent = `${timerSeconds}s`;
-
-            if (timerSeconds <= 5) {
-                timerEl.style.color = '#ff4757';
-                playBeep(330, 'square', 0.1);
-            } else {
-                timerEl.style.color = '#ff9f43';
+            if (timerEl) {
+                timerEl.textContent = `${timerSeconds}s`;
+                if (timerSeconds <= 5) {
+                    timerEl.style.color = '#ff4757';
+                    playBeep(330, 'square', 0.1);
+                } else {
+                    timerEl.style.color = '#ff9f43';
+                }
             }
 
             if (timerSeconds <= 0) {
@@ -154,45 +175,50 @@
             streak++;
             updateStats();
 
-            overlayEmoji.textContent = '🎉';
-            overlayTitle.textContent = `Masterpiece! (+${roundScore} pts)`;
-            overlayDesc.textContent = `Great sketch of ${currentPrompt.name}! AI Recognition: ${accuracyScore}%. Streak is now ${streak}!`;
-            startChallengeBtn.textContent = 'Next Challenge 🚀';
+            if (overlayEmoji) overlayEmoji.textContent = '🎉';
+            if (overlayTitle) overlayTitle.textContent = `Masterpiece! (+${roundScore} pts)`;
+            if (overlayDesc) overlayDesc.textContent = `Great sketch of ${currentPrompt.name}! AI Recognition: ${accuracyScore}%. Streak is now ${streak}!`;
+            if (startChallengeBtn) startChallengeBtn.textContent = 'Next Challenge 🚀';
             playBeep(880, 'sine', 0.3);
             createConfettiParticles();
         } else {
             streak = 0;
             updateStats();
 
-            overlayEmoji.textContent = '⏰';
-            overlayTitle.textContent = "Time's Up!";
-            overlayDesc.textContent = `You were sketching ${currentPrompt?.name || 'prompt'}. Give it another shot to build your streak!`;
-            startChallengeBtn.textContent = 'Try Again 🔄';
+            if (overlayEmoji) overlayEmoji.textContent = '⏰';
+            if (overlayTitle) overlayTitle.textContent = "Time's Up!";
+            if (overlayDesc) overlayDesc.textContent = `You were sketching ${currentPrompt?.name || 'prompt'}. Give it another shot to build your streak!`;
+            if (startChallengeBtn) startChallengeBtn.textContent = 'Try Again 🔄';
             playBeep(220, 'sawtooth', 0.3);
         }
 
-        gameOverlay.style.display = 'flex';
+        if (gameOverlay) {
+            gameOverlay.style.display = 'flex';
+        }
     }
 
     function evaluateDrawing() {
-        if (!isGameActive) return;
+        if (!isGameActive && strokesCount === 0) return;
 
-        // Dynamic stroke density evaluation
-        const target = currentPrompt.targetStrokes;
+        const target = currentPrompt.targetStrokes || 15;
         const ratio = Math.min(1.0, strokesCount / target);
         const percent = Math.floor(ratio * 100);
 
-        evalPercent.textContent = `${percent}%`;
-        evalBar.style.width = `${percent}%`;
-
-        if (percent >= 75 && timerSeconds > 0) {
-            evalBar.style.background = 'linear-gradient(135deg, #00f2fe 0%, #38ef7d 100%)';
+        if (evalPercent) evalPercent.textContent = `${percent}%`;
+        if (evalBar) {
+            evalBar.style.width = `${percent}%`;
+            if (percent >= 75) {
+                evalBar.style.background = 'linear-gradient(135deg, #00f2fe 0%, #38ef7d 100%)';
+            }
         }
     }
 
     function submitDrawing() {
-        if (!isGameActive) return;
-        if (strokesCount < 5) {
+        if (!isGameActive) {
+            startGame();
+            return;
+        }
+        if (strokesCount < 4) {
             alert('Draw a little more before submitting to the AI evaluator!');
             return;
         }
@@ -200,9 +226,9 @@
     }
 
     function updateStats() {
-        timerEl.textContent = `${timerSeconds}s`;
-        scoreEl.textContent = `${score} pts`;
-        streakEl.textContent = `Streak: ${streak}`;
+        if (timerEl) timerEl.textContent = `${timerSeconds}s`;
+        if (scoreEl) scoreEl.textContent = `${score} pts`;
+        if (streakEl) streakEl.textContent = `Streak: ${streak}`;
     }
 
     function saveState() {
@@ -227,7 +253,7 @@
 
     // Particle Trail Effects
     function addParticle(x, y, color) {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 2; i++) {
             particles.push({
                 x: x,
                 y: y,
@@ -242,13 +268,13 @@
 
     function createConfettiParticles() {
         const colors = ['#38ef7d', '#00f2fe', '#ff007f', '#ffe600', '#9d4edd'];
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < 70; i++) {
             particles.push({
-                x: particleCanvas.width / (window.devicePixelRatio * 2),
-                y: particleCanvas.height / (window.devicePixelRatio * 2),
-                vx: (Math.random() - 0.5) * 12,
-                vy: (Math.random() - 0.5) * 12 - 4,
-                size: Math.random() * 7 + 4,
+                x: particleCanvas.width / 2,
+                y: particleCanvas.height / 2,
+                vx: (Math.random() - 0.5) * 14,
+                vy: (Math.random() - 0.5) * 14 - 3,
+                size: Math.random() * 6 + 3,
                 color: colors[Math.floor(Math.random() * colors.length)],
                 alpha: 1.5
             });
@@ -282,19 +308,21 @@
     }
     requestAnimationFrame(renderParticles);
 
-    // Canvas Pointer Drawing Handlers
+    // Pointer Event Handlers
     function getPointerPos(e) {
         const rect = paintCanvas.getBoundingClientRect();
-        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        const clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY !== undefined ? e.clientY : (e.touches && e.touches[0].clientY);
         return {
-            x: clientX - rect.left,
-            y: clientY - rect.top
+            x: (clientX - rect.left) * (paintCanvas.width / rect.width),
+            y: (clientY - rect.top) * (paintCanvas.height / rect.height)
         };
     }
 
     function startDraw(e) {
-        if (!isGameActive) return;
+        if (!isGameActive) {
+            startGame();
+        }
         saveState();
         isDrawing = true;
         const pos = getPointerPos(e);
@@ -303,7 +331,7 @@
     }
 
     function draw(e) {
-        if (!isDrawing || !isGameActive) return;
+        if (!isDrawing) return;
         const pos = getPointerPos(e);
 
         ctx.beginPath();
@@ -312,14 +340,14 @@
 
         if (currentTool === 'eraser') {
             ctx.globalCompositeOperation = 'destination-out';
-            ctx.lineWidth = brushSize * 2;
+            ctx.lineWidth = brushSize * 2.5;
             ctx.stroke();
         } else {
             ctx.globalCompositeOperation = 'source-over';
             ctx.lineWidth = brushSize;
 
             if (currentTool === 'rainbow') {
-                hue = (hue + 2) % 360;
+                hue = (hue + 3) % 360;
                 const rainbowColor = `hsl(${hue}, 100%, 60%)`;
                 ctx.strokeStyle = rainbowColor;
                 ctx.shadowColor = rainbowColor;
@@ -351,20 +379,22 @@
     paintCanvas.addEventListener('mousemove', draw);
     window.addEventListener('mouseup', stopDraw);
 
-    // Touch Events (Mobile Support)
+    // Touch Events for Mobile
     paintCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e); }, { passive: false });
     paintCanvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
     paintCanvas.addEventListener('touchend', stopDraw);
 
     // UI Event Listeners
-    startChallengeBtn.addEventListener('click', startGame);
-    submitBtn.addEventListener('click', submitDrawing);
-    undoBtn.addEventListener('click', undo);
-    clearBtn.addEventListener('click', clearCanvas);
+    if (startChallengeBtn) startChallengeBtn.addEventListener('click', startGame);
+    if (submitBtn) submitBtn.addEventListener('click', submitDrawing);
+    if (undoBtn) undoBtn.addEventListener('click', undo);
+    if (clearBtn) clearBtn.addEventListener('click', clearCanvas);
 
-    brushSizeInput.addEventListener('input', (e) => {
-        brushSize = parseInt(e.target.value, 10);
-    });
+    if (brushSizeInput) {
+        brushSizeInput.addEventListener('input', (e) => {
+            brushSize = parseInt(e.target.value, 10);
+        });
+    }
 
     toolBtns.forEach(btn => {
         btn.addEventListener('click', () => {

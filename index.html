@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeoSketch AI — Next-Gen Offline Creative Canvas & Neural AI</title>
-    <meta name="description" content="NeoSketch AI is an offline-first creative studio for Android powered by ONNX neural engines, professional drawing tools, and super-resolution upscaling.">
+    <title>NeoSketch AI — Professional Offline Creative Canvas & Neural AI Studio</title>
+    <meta name="description" content="NeoSketch AI is a privacy-first, offline creative studio for Android powered by on-device neural engines, pro layers, and 4x neural upscaling.">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
@@ -16,38 +17,31 @@
     <div class="glow-orb orb-2"></div>
     <div class="glow-orb orb-3"></div>
 
-    <!-- Navigation Header -->
+    <!-- Professional Navigation Bar -->
     <header class="navbar">
         <div class="nav-container">
-            <div class="logo-group">
-                <div class="logo-badge">
-                    <svg viewBox="0 0 100 100" class="logo-svg">
-                        <defs>
-                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#38ef7d" />
-                                <stop offset="50%" stop-color="#11998e" />
-                                <stop offset="100%" stop-color="#00f2fe" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="50" cy="50" r="44" fill="none" stroke="url(#logoGrad)" stroke-width="8" stroke-dasharray="210 60"/>
-                        <circle cx="50" cy="50" r="24" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.8"/>
-                        <path d="M30,50 L70,50 M50,30 L50,70" stroke="#38ef7d" stroke-width="4" stroke-linecap="round"/>
-                        <polygon points="50,20 62,40 38,40" fill="#00f2fe"/>
-                    </svg>
-                </div>
+            <a href="#" class="logo-group">
+                <img src="logo.svg" alt="NeoSketch AI Logo" class="brand-logo-img">
                 <span class="brand-title">NeoSketch <span class="brand-ai">AI</span></span>
-            </div>
+            </a>
+            
             <nav class="nav-links">
                 <a href="#features">Features</a>
-                <a href="#game-section" class="nav-game-link">🎮 AI QuickDraw Game</a>
-                <a href="#ai-models">Neural Models</a>
+                <a href="#game-section" class="nav-game-link">🎮 AI QuickDraw</a>
+                <a href="https://github.com/Tcode-Motion/Neo-Sketch-AI" target="_blank" rel="noopener" class="nav-github-link">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
                 <a href="#download" class="nav-cta-btn">Download APK</a>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Main Content -->
     <main>
+        <!-- Hero Section -->
         <section class="hero-section">
             <div class="hero-content">
                 <div class="hero-badge">
@@ -58,10 +52,10 @@
                     <span class="gradient-text">Powered by On-Device AI</span>
                 </h1>
                 <p class="hero-desc">
-                    Unleash boundless creativity with high-performance layers, realistic pro brushes, and on-device ONNX neural models for instant depth estimation, background removal, and 4x neural upscaling.
+                    Unleash boundless creativity with an infinite layer system, realistic pro brushes, and on-device neural models for instant depth estimation, background removal, and 4x neural upscaling.
                 </p>
                 <div class="hero-actions">
-                    <a href="NeoSketch-Production.apk" download="NeoSketch-v2.0-Production.apk" class="btn btn-primary" id="mainDownloadBtn">
+                    <a href="https://github.com/Tcode-Motion/Neo-Sketch-AI/releases/download/v2.0/NeoSketch-Production.apk" class="btn btn-primary" id="mainDownloadBtn">
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                         </svg>
@@ -95,7 +89,7 @@
             <div class="section-header">
                 <div class="tag-label">MINI-GAME EXPERIENCE</div>
                 <h2 class="section-title">AI QuickDraw: The 30s Sketch Battle</h2>
-                <p class="section-subtitle">Test your drawing skills against our AI challenge generator! Sketch the prompt before the timer runs out.</p>
+                <p class="section-subtitle">Test your drawing skills against our challenge engine! Sketch the prompt before the timer runs out.</p>
             </div>
 
             <div class="game-card">
@@ -103,7 +97,7 @@
                 <div class="game-bar">
                     <div class="prompt-box">
                         <span class="prompt-label">TARGET PROMPT:</span>
-                        <span class="prompt-text" id="targetPrompt">Loading Challenge...</span>
+                        <span class="prompt-text" id="targetPrompt">Cyber Rocket 🚀</span>
                     </div>
                     <div class="game-stats">
                         <div class="stat-pill timer-pill">
@@ -123,8 +117,8 @@
 
                 <!-- Canvas Workspace -->
                 <div class="canvas-wrapper">
-                    <canvas id="paintCanvas" width="800" height="500"></canvas>
-                    <canvas id="particleCanvas" width="800" height="500"></canvas>
+                    <canvas id="paintCanvas"></canvas>
+                    <canvas id="particleCanvas"></canvas>
 
                     <!-- Start / Game Over Overlay -->
                     <div class="game-overlay" id="gameOverlay">
@@ -146,12 +140,12 @@
                     </div>
 
                     <div class="color-palette">
-                        <button class="color-dot active" style="background: #ffffff;" data-color="#ffffff"></button>
-                        <button class="color-dot" style="background: #38ef7d;" data-color="#38ef7d"></button>
+                        <button class="color-dot active" style="background: #38ef7d;" data-color="#38ef7d"></button>
                         <button class="color-dot" style="background: #00f2fe;" data-color="#00f2fe"></button>
                         <button class="color-dot" style="background: #ff007f;" data-color="#ff007f"></button>
                         <button class="color-dot" style="background: #ffe600;" data-color="#ffe600"></button>
                         <button class="color-dot" style="background: #9d4edd;" data-color="#9d4edd"></button>
+                        <button class="color-dot" style="background: #ffffff;" data-color="#ffffff"></button>
                     </div>
 
                     <div class="slider-group">
@@ -217,13 +211,13 @@
         <section class="download-section" id="download">
             <div class="download-card">
                 <div class="dl-content">
-                    <span class="tag-label">OFFICIAL RELEASE</span>
+                    <span class="tag-label">OFFICIAL PRODUCTION RELEASE</span>
                     <h2>Install NeoSketch for Android</h2>
                     <p>Get the full production build with bundled fallback models, full offline tools, and hardware acceleration.</p>
                     
                     <div class="apk-info-box">
                         <div class="info-row">
-                            <span class="info-key">Package:</span>
+                            <span class="info-key">Package Name:</span>
                             <span class="info-val">com.neosketch.ai</span>
                         </div>
                         <div class="info-row">
@@ -235,17 +229,17 @@
                             <span class="info-val">Android 8.0+ (API 26-35)</span>
                         </div>
                         <div class="info-row">
-                            <span class="info-key">Architecture:</span>
-                            <span class="info-val">arm64-v8a / armeabi-v7a / x86_64</span>
+                            <span class="info-key">File Size:</span>
+                            <span class="info-val">84.7 MB (Universal APK)</span>
                         </div>
                     </div>
 
                     <div class="dl-btn-wrapper">
-                        <a href="NeoSketch-Production.apk" download="NeoSketch-v2.0-Production.apk" class="btn btn-primary btn-large">
+                        <a href="https://github.com/Tcode-Motion/Neo-Sketch-AI/releases/download/v2.0/NeoSketch-Production.apk" class="btn btn-primary btn-large">
                             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                             </svg>
-                            <span>Download NeoSketch APK</span>
+                            <span>Download NeoSketch APK (v2.0)</span>
                         </a>
                     </div>
                 </div>
@@ -253,15 +247,51 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Professional Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <p>© 2026 NeoSketch AI. Open Source Creative Software.</p>
-            <p class="footer-sub">Crafted with ❤️ for digital artists, illustrators, and creators worldwide.</p>
+            <div class="footer-grid">
+                <!-- Brand Column -->
+                <div class="footer-col footer-brand-col">
+                    <div class="footer-logo">
+                        <img src="logo.svg" alt="NeoSketch AI" class="footer-logo-img">
+                        <span class="brand-title">NeoSketch <span class="brand-ai">AI</span></span>
+                    </div>
+                    <p class="footer-tagline">
+                        Next-generation offline-first creative studio for Android. Unlocking professional drawing, infinite layers, and neural super-resolution without cloud latency.
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="footer-col">
+                    <h4 class="footer-heading">Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#game-section">AI QuickDraw Game</a></li>
+                        <li><a href="#download">Download APK</a></li>
+                        <li><a href="https://github.com/Tcode-Motion/Neo-Sketch-AI/releases" target="_blank" rel="noopener">Releases & Changelog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources Column -->
+                <div class="footer-col">
+                    <h4 class="footer-heading">Open Source</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/Tcode-Motion/Neo-Sketch-AI" target="_blank" rel="noopener">GitHub Repository</a></li>
+                        <li><a href="https://github.com/Tcode-Motion/Neo-Sketch-AI/issues" target="_blank" rel="noopener">Report an Issue</a></li>
+                        <li><a href="https://github.com/Tcode-Motion/Neo-Sketch-AI/blob/main/README.md" target="_blank" rel="noopener">Documentation</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 NeoSketch AI. Open Source Creative Software.</p>
+                <p class="footer-privacy-note">100% Offline-First • Zero Cloud Telemetry • Privacy by Design</p>
+            </div>
         </div>
     </footer>
 
-    <!-- Game & Page Scripts -->
+    <!-- Scripts -->
     <script src="game.js"></script>
     <script src="app.js"></script>
 </body>

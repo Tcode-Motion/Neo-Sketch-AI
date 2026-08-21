@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" width="108" height="108">
+  <defs>
+    <linearGradient id="rainbowSwirl" x1="28" y1="28" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0.0" stop-color="#00E5FF"/>
+      <stop offset="0.4" stop-color="#651FFF"/>
+      <stop offset="0.7" stop-color="#F50057"/>
+      <stop offset="1.0" stop-color="#FF9100"/>
+    </linearGradient>
+    <linearGradient id="brushHandle" x1="34" y1="74" x2="78" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0.0" stop-color="#E2E8F0"/>
+      <stop offset="0.5" stop-color="#94A3B8"/>
+      <stop offset="1.0" stop-color="#475569"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rainbow Paint Swirl Arc -->
+  <path d="M28,54 A26,26 0 1,1 78,60" fill="none" stroke="url(#rainbowSwirl)" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Camera Aperture Outer Ring -->
+  <circle cx="54" cy="54" r="22" fill="#161C2B" stroke="#00E5FF" stroke-width="2"/>
+
+  <!-- Aperture Shutter Blades -->
+  <path d="M54,34 L66,48 L54,54 Z" fill="#0288D1"/>
+  <path d="M70,48 L64,66 L54,54 Z" fill="#7B1FA2"/>
+  <path d="M64,66 L44,68 L54,54 Z" fill="#C2185B"/>
+  <path d="M44,68 L38,50 L54,54 Z" fill="#0288D1"/>
+  <path d="M38,50 L54,34 L54,54 Z" fill="#7B1FA2"/>
+
+  <!-- Center Lens Eye -->
+  <circle cx="54" cy="54" r="9" fill="#080B12" stroke="#00E5FF" stroke-width="1.5"/>
+  <circle cx="50" cy="50" r="3" fill="#FFFFFF"/>
+
+  <!-- Diagonal Paint Brush Handle -->
+  <line x1="34" y1="74" x2="78" y2="30" stroke="url(#brushHandle)" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Metallic Ferrule Ring -->
+  <circle cx="44" cy="64" r="4" fill="#FFFFFF" stroke="#64748B" stroke-width="1"/>
+
+  <!-- White Brush Tip Bristles -->
+  <path d="M38,70 C32,72 30,78 35,78 C39,78 41,74 38,70 Z" fill="#FFFFFF"/>
+
+  <!-- Paint Splatters -->
+  <circle cx="24" cy="30" r="2" fill="#00E5FF"/>
+  <circle cx="80" cy="72" r="2" fill="#F50057"/>
+  <circle cx="82" cy="28" r="2" fill="#FF9100"/>
+</svg>
